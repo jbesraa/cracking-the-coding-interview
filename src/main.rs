@@ -84,6 +84,7 @@ fn one_away(s1: &str, s2: &str) -> bool {
     dbg!(distance);
     distance < 2
 }
+
 // Q6 String Compression
 // Implement a method to perform basic string compression using the
 // counts of repeated charts.
@@ -91,32 +92,33 @@ fn one_away(s1: &str, s2: &str) -> bool {
 // assume string is only Aa-Zz
 // (aabcccccaaa) -> a2b1c5a3
 
-// fn compress_string(s: &str) -> String {
-//     let mut result: Vec<char> = Vec::new();
-//     let char_vec: Vec<char> = s.chars().collect();
-//     let mut last_char = char_vec[0];
-//     let mut current_count: i32 = 0;
-//     let word_length = char_vec.len();
-//     dbg!(&word_length);
-//     for n in 0..word_length {
-//         // last handle last char
-//         dbg!(&n);
-//         if char_vec[n] == last_char {
-//             current_count += 1;
-//             continue;
-//         }
-//         dbg!(&current_count);
-//         dbg!(last_char);
-//         result.push(last_char);
-//         last_char = char_vec[n];
-//         current_count = 1;
-//     }
-//     let r = result.iter().cloned().collect::<String>();
+#[allow(dead_code)]
+fn compress_string(s: &str) -> String {
+    let mut result: String = "".to_string();
+    let char_vec: Vec<char> = s.chars().collect();
+    let mut current_char = char_vec[0];
+    let mut current_count: i32 = 0;
 
-//     dbg!(r);
+    let word_length = char_vec.len();
+    dbg!(&word_length);
+    for n in 0..word_length {
+        //  handle last char
+        dbg!(&n);
+        if char_vec[n] == current_char {
+            current_count += 1;
+            continue;
+        }
+        dbg!(&current_count);
+        dbg!(current_char);
+        result.push_str(&format!("{}{}", current_char, current_count));
+        current_char = char_vec[n];
+        current_count = 1;
+    }
 
-//     "Stri".to_string()
-// }
+    dbg!(&result);
+
+    result
+}
 
 fn main() {
     println!("Hello, world!");
@@ -168,11 +170,11 @@ mod tests {
         assert_eq!(is_palindrome(s1), false);
     }
 
-    // #[test]
-    // fn compressed_string() {
-    //     let s1 = "aacccbC";
-    //     assert_eq!(compress_string(s1), "a2c3b1C1");
-    // }
+    #[test]
+    fn compressed_string() {
+        let s1 = "aacccbC";
+        assert_eq!(compress_string(s1), "a2c3b1C1");
+    }
     #[test]
     fn words_not_one_away() {
         let s1 = "abm";
