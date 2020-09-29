@@ -100,24 +100,18 @@ fn compress_string(s: &str) -> String {
     let mut current_count: i32 = 0;
 
     let word_length = char_vec.len();
-    dbg!(&word_length);
     for n in 0..word_length {
         //  handle last char
-        dbg!(&n);
         if char_vec[n] == current_char {
             current_count += 1;
             continue;
         }
-        dbg!(&current_count);
-        dbg!(current_char);
         result.push_str(&format!("{}{}", current_char, current_count));
         current_char = char_vec[n];
         current_count = 1;
     }
 
     result.push_str(&format!("{}{}", current_char, current_count));
-    dbg!(&result);
-
     result
 }
 
