@@ -48,6 +48,7 @@ fn is_palindrome(s: &str) -> bool {
 // Given two strings, write a function to check if they are one edit(or zero edits) away.
 // examples:
 // pale, ple -> true || pales, pale -> true || pale, bale -> true || pale, bake -> false
+
 #[allow(dead_code)]
 fn one_away(s1: &str, s2: &str) -> bool {
     let mut distance: usize = 0;
