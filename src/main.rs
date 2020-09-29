@@ -115,6 +115,7 @@ fn compress_string(s: &str) -> String {
         current_count = 1;
     }
 
+    result.push_str(&format!("{}{}", current_char, current_count));
     dbg!(&result);
 
     result
