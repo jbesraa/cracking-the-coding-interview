@@ -100,14 +100,13 @@ fn compress_string(s: &str) -> String {
     let mut current_count: i32 = 0;
 
     let word_length = char_vec.len();
-    for n in 0..word_length {
-        //  handle last char
-        if char_vec[n] == current_char {
+    for elm in char_vec.iter().take(word_length) {
+        if current_char == *elm {
             current_count += 1;
             continue;
         }
         result.push_str(&format!("{}{}", current_char, current_count));
-        current_char = char_vec[n];
+        current_char = *elm;
         current_count = 1;
     }
 
@@ -165,6 +164,11 @@ mod tests {
         assert_eq!(is_palindrome(s1), false);
     }
 
+    #[test]
+    fn compressed_string_v2() {
+        let s1 = "accbCdd";
+        assert_eq!(compress_string(s1), "a1c2b1C1d2");
+    }
     #[test]
     fn compressed_string() {
         let s1 = "aacccbC";
