@@ -4,13 +4,13 @@ use std::rc::Rc;
 // ** Node Implementaion **
 
 // types
-type NodeRef = Rc<RefCell<Node>>;
-type NodeOption = Option<NodeRef>;
+pub type NodeRef = Rc<RefCell<Node>>;
+pub type NodeOption = Option<NodeRef>;
 
 #[derive(PartialEq, Debug)]
 pub struct Node {
 	data: String,
-	next: NodeOption,
+	pub next: NodeOption,
 }
 
 impl Node {
@@ -28,6 +28,7 @@ impl Drop for Node {
 	}
 }
 
+#[allow(unused_imports)]
 mod tests {
 
 	use super::*;
