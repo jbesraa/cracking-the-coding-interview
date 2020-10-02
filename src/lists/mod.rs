@@ -1,6 +1,7 @@
 mod node;
 
 use crate::lists::node::{Node, NodeOption};
+use std::rc::Rc;
 
 #[derive(PartialEq, Debug)]
 pub struct LinkedList {
@@ -9,6 +10,7 @@ pub struct LinkedList {
 	pub length: usize,
 }
 
+#[allow(dead_code)]
 impl LinkedList {
 	pub fn new_empty() -> Self {
 		LinkedList {
@@ -27,8 +29,27 @@ impl LinkedList {
 			length: 0,
 		}
 	}
+
+	pub fn append_start(&mut self, text: String) {
+		let new_head = Node::new(text);
+		match self.head.take() {
+			Some(old_head) => {
+				new_head.borrow_mut().next = Some(Rc::clone(&old_head));
+				match &self.tail {
+					None => self.tail = Some(Rc::clone(&old_head)),
+					_ => (),
+				}
+			}
+
+			_ => (),
+		}
+
+		self.head = Some(new_head);
+		self.length = self.length + 1;
+	}
 }
 
+#[allow(unused_imports)]
 mod tests {
 	use super::*;
 
@@ -46,6 +67,7 @@ mod tests {
 		)
 	}
 
+	#[test]
 	fn test_new_list() {
 		let list = LinkedList::new("node_1".to_string());
 
