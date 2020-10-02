@@ -32,20 +32,15 @@ impl LinkedList {
 
 	pub fn append_start(&mut self, text: String) {
 		let new_head = Node::new(text);
-		match self.head.take() {
-			Some(old_head) => {
-				new_head.borrow_mut().next = Some(Rc::clone(&old_head));
-				match &self.tail {
-					None => self.tail = Some(Rc::clone(&old_head)),
-					_ => (),
-				}
+		if let Some(old_head) = self.head.take() {
+			new_head.borrow_mut().next = Some(Rc::clone(&old_head));
+			if self.tail.is_none() {
+				self.tail = Some(Rc::clone(&old_head))
 			}
-
-			_ => (),
 		}
 
 		self.head = Some(new_head);
-		self.length = self.length + 1;
+		self.length += 1;
 	}
 }
 
