@@ -26,7 +26,7 @@ impl LinkedList {
 		LinkedList {
 			head: Some(new_head),
 			tail: None,
-			length: 0,
+			length: 1,
 		}
 	}
 
@@ -47,6 +47,7 @@ impl LinkedList {
 #[allow(unused_imports)]
 mod tests {
 	use super::*;
+	use std::cell::RefCell;
 
 	#[test]
 	fn test_new_empty_list() {
@@ -71,8 +72,32 @@ mod tests {
 			LinkedList {
 				head: Some(Node::new("node_1".to_string())),
 				tail: None,
-				length: 0
+				length: 1
 			}
 		)
+	}
+
+	#[test]
+	fn test_append_start() {
+		let s = "tail".to_string();
+		let c = "head".to_string();
+
+		let tail = Node::new(s.clone());
+
+		let head = Node {
+			data: c.clone(),
+			next: Some(Rc::clone(&tail)),
+		};
+
+		let list = LinkedList {
+			head: Some(Rc::new(RefCell::new(head))),
+			tail: Some(tail),
+			length: 2,
+		};
+
+		let mut l_list = LinkedList::new_empty();
+		l_list.append_start(s);
+		l_list.append_start(c);
+		assert_eq!(l_list, list);
 	}
 }

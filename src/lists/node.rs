@@ -9,7 +9,7 @@ pub type NodeOption = Option<NodeRef>;
 
 #[derive(PartialEq, Debug)]
 pub struct Node {
-	data: String,
+	pub data: String,
 	pub next: NodeOption,
 }
 
