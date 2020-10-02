@@ -166,12 +166,17 @@ mod tests {
     }
 
     #[test]
-    fn compressed_string_v2() {
+    fn compressed_string() {
         let s1 = "accbCdd";
         assert_eq!(compress_string(s1), "a1c2b1C1d2");
     }
     #[test]
-    fn compressed_string() {
+    fn compressed_string2() {
+        let s1 = "aaa";
+        assert_eq!(compress_string(s1), "a3");
+    }
+    #[test]
+    fn compressed_string3() {
         let s1 = "aacccbC";
         assert_eq!(compress_string(s1), "a2c3b1C1");
     }
