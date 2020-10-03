@@ -42,6 +42,21 @@ impl LinkedList {
 		self.head = Some(new_head);
 		self.length += 1;
 	}
+
+	pub fn append_end(&mut self, text: String) {
+		let new_tail = Node::new(text);
+
+		if let Some(old_tail) = self.tail.take() {
+			old_tail.borrow_mut().next = Some(Rc::clone(&new_tail));
+		} else if self.tail.is_none() {
+			if let Some(head) = self.head.take() {
+				head.borrow_mut().next = Some(Rc::clone(&new_tail));
+				self.head = Some(head);
+			}
+		}
+		self.tail = Some(new_tail);
+		self.length += 1;
+	}
 }
 
 #[allow(unused_imports)]
@@ -98,6 +113,28 @@ mod tests {
 		let mut l_list = LinkedList::new_empty();
 		l_list.append_start(s);
 		l_list.append_start(c);
+		assert_eq!(l_list, list);
+	}
+	#[test]
+	fn test_append_end() {
+		let s = "head".to_string();
+		let c = "tail".to_string();
+
+		let tail = Node::new(c.clone());
+
+		let head = Node {
+			data: s.clone(),
+			next: Some(Rc::clone(&tail)),
+		};
+
+		let list = LinkedList {
+			head: Some(Rc::new(RefCell::new(head))),
+			tail: Some(tail),
+			length: 2,
+		};
+
+		let mut l_list = LinkedList::new(s);
+		l_list.append_end(c);
 		assert_eq!(l_list, list);
 	}
 }
