@@ -137,4 +137,19 @@ mod tests {
 		l_list.append_end(c);
 		assert_eq!(l_list, list);
 	}
+
+	#[test]
+	fn test_append_end1() {
+		let s = "head".to_string();
+		let c = "tail".to_string();
+		let m = "middle".to_string();
+
+		let tail = Node::new(c.clone());
+
+		let mut l_list = LinkedList::new(s);
+		l_list.append_end(m);
+		l_list.append_end(c);
+		assert_eq!(l_list.length, 3);
+		assert_eq!(l_list.tail, Some(tail));
+	}
 }
